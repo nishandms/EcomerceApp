@@ -5,7 +5,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fileupload = require("express-fileupload")
+var mongo = require("./config/mongo-connect")
 
+mongo.connect((err) => {
+    if (err) console.log("connection failed");
+    else console.log("database connected successfully");
+})
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
 
@@ -18,7 +23,7 @@ app.engine('hbs', express_hbs.engine({ extname: 'hbs', defaultLayout: 'layout', 
 app.enabled()
 
 app.use(logger('dev'));
-app.use(fileupload())
+app.use(fileupload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

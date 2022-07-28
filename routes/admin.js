@@ -1,4 +1,5 @@
 var express = require('express');
+const products = require('../products/product');
 var router = express.Router();
 
 /* GET home page. */
@@ -11,7 +12,10 @@ router.get('/add-product', (req, res, next) => {
 router.post('/save-product', (req, res, next) => {
     console.log("callsed")
     console.log(req.body)
-        // res.render('add-product')
+    console.log(req.files.image)
+    products.addPrduct(req.body, (data) => {
+        console.log(data)
+    })
 })
 
 module.exports = router;
