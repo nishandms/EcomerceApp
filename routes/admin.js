@@ -1,25 +1,36 @@
 var express = require('express');
 const products = require('../products/product');
 var router = express.Router();
+const ObjectId = require('mongodb').ObjectID;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('admin', { title: 'Ekart', user: false });
+    products.getAllProducts().then(data => {
+        console.log(data)
+        res.render('admin', { title: 'Ekart', user: false, product: data });
+    })
 });
 router.get('/add-product', (req, res, next) => {
     res.render('add-product')
 })
 router.post('/save-product', (req, res, next) => {
-    console.log("callsed")
-    console.log(req.body)
-    console.log(req.files.image)
     let image = req.files.image
     products.addPrduct(req.body, (data) => {
-        image.mv(`./public/productImages/${data}.jpg`,(err,done)=>{
-            if(!err) {
-                console.log("image successfully saved")
-                res.render('add-product')
+        image.mv(`./public/productImages/${data}.jpg`, (err, done) => {
+            if (!err) {
+                console.log("image successfully saved");
+                products.getAllProducts().then(data => {
+                    res.render('admin', { title: 'Ekart', user: false, product: data });
+                })
             }
+        })
+    })
+})
+router.post('/delete-product', (req, res, next) => {
+    let response = req.body;
+    products.removeProducts({ _id: new ObjectId(`${response._id}`) }).then(data => {
+        products.getAllProducts().then(data => {
+            res.render('admin', { title: 'Ekart', user: false, product: data });
         })
     })
 })

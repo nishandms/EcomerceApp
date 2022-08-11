@@ -9,23 +9,20 @@
     <tr>
       <th scope="col">Poroduct Name</th>
       <th scope="col">Prize</th>
+      <th scope="col">Ation</th>
     </tr>
   </thead>
   <tbody>
+    {{#each product}}
     <tr>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>{{this.product}}</td>
+      <td>{{this.prize}}</td>
+      <td><button class="btn btn-danger" onclick="deleteData('{{this._id}}')">Delete</button></td>
     </tr>
-    <tr>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    {{/each }}
   </tbody>
 </table>
 </div>
-
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="/js/admin.js"></script>

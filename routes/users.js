@@ -5,11 +5,11 @@ const products = require('../products/product');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    let product = ["sdfsd", "sdvsdsdv"]
-    products.getAllProducts().then((produ) => {
-        console.log(produ)
+    let product = []
+    products.getAllProducts().then((data) => {
+        product = data;
+        res.render('home', { title: 'Ekart', user: true, product: product });
     })
-    res.render('home', { title: 'Ekart', user: true, product: product });
 });
 
 module.exports = router;
