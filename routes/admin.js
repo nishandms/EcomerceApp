@@ -5,14 +5,19 @@ const ObjectId = require('mongodb').ObjectID;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    products.getAllProducts().then(data => {
-        console.log(data)
-        res.render('admin', { title: 'Ekart', user: false, product: data });
-    })
+        res.render('admin', { title: 'Ekart', user: false});
 });
+
+router.get('/get-products', (req,res,next) => {
+    products.getAllProducts().then(data => {
+        res.send(data)
+    })
+})
+
 router.get('/add-product', (req, res, next) => {
     res.render('add-product')
 })
+
 router.post('/save-product', (req, res, next) => {
     let image = req.files.image
     products.addPrduct(req.body, (data) => {
@@ -29,9 +34,7 @@ router.post('/save-product', (req, res, next) => {
 router.post('/delete-product', (req, res, next) => {
     let response = req.body;
     products.removeProducts({ _id: new ObjectId(`${response._id}`) }).then(data => {
-        products.getAllProducts().then(data => {
-            res.render('admin', { title: 'Ekart', user: false, product: data });
-        })
+        res.send("Success")
     })
 })
 

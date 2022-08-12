@@ -3,7 +3,7 @@
  <a href="/admin/add-product" class="btn btn-primary float-end">Add Product</a>
   </div>
    
-    <div class="col-md-12">
+    <div class="col-md-12 card card-body">
     <table class="table">
   <thead>
     <tr>
@@ -12,14 +12,7 @@
       <th scope="col">Ation</th>
     </tr>
   </thead>
-  <tbody>
-    {{#each product}}
-    <tr>
-      <td>{{this.product}}</td>
-      <td>{{this.prize}}</td>
-      <td><button class="btn btn-danger" onclick="deleteData('{{this._id}}')">Delete</button></td>
-    </tr>
-    {{/each }}
+  <tbody id="product-body">
   </tbody>
 </table>
 </div>
